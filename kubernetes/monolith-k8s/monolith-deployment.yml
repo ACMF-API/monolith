@@ -46,8 +46,8 @@ spec:
               done
       containers:
         - name: monolith-app
-          image: monolith:latest
-          imagePullPolicy: IfNotPresent
+          image: 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
+          imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prod

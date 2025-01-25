@@ -1,62 +1,48 @@
-name: Deploy to EKS
+name: Node js app deploy to EKS
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   deploy:
-    name: Build and Deploy to EKS
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Configure AWS Credentials
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-          aws-region: ${{ secrets.AWS_REGION }}
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v2.0
+      with:
+        version: 'v1.24.0' # default is latest stable
+      id: install
 
-      - name: Log in to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
-        with:
-          mask-password: 'true'
-          registry-type: private
-          skip-logout: false
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-      - name: Build and Push Docker Image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
-          IMAGE_TAG: latest
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Set Up kubectl
-        run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+    - name: Build, tag, and push docker image to Amazon ECR
+      env:
+        REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+        IMAGE_TAG: latest
+      run: |
+        docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
+        docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
 
-      - name: Deploy MySQL to EKS
-        run: |
-          kubectl apply -f monolith-k8s/monolith-mysql.yaml
-
-      - name: Deploy Application to EKS
-        run: |
-          sed -i "s|image: monolith:latest|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" monolith-k8s/monolith-deployment.yaml
-          kubectl apply -f monolith-k8s/monolith-deployment.yaml
-          kubectl apply -f monolith-k8s/monolith-service.yaml
-
-      - name: Verify Deployment
-        run: |
-          kubectl rollout status deployment/monolith
-          kubectl get pods
-          kubectl get services
+    - name: Update kube config
+      run: aws eks update-kubeconfig --region us-east-1 --name ${{ secrets.EKS_CLUSTER_NAME }}
+    
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f monolith-k8s/deployment.yaml
+        kubectl apply -f monolith-k8s/service.yaml

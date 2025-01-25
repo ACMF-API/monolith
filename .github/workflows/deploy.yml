@@ -15,7 +15,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
-      # Set AWS Environment Variables using export
+      # Configure AWS Credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -29,7 +29,8 @@ jobs:
         uses: aws-actions/amazon-ecr-login@v2
         with:
           mask-password: 'true'
-       
+          registry-type: private
+          skip-logout: false
 
       - name: Build and Push Docker Image
         env:
@@ -42,7 +43,7 @@ jobs:
 
       - name: Set Up kubectl
         run: |
-          aws eks update-kubeconfig --region $AWS_REGION --name ${{ secrets.EKS_CLUSTER_NAME }}
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
 
       - name: Deploy MySQL to EKS
         run: |

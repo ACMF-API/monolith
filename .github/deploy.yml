@@ -1,0 +1,56 @@
+name: Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build and Deploy to EKS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push Docker Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Set Up kubectl
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Deploy MySQL to EKS
+        run: |
+          kubectl apply -f monolith-k8s/monolith-mysql.yaml
+
+      - name: Deploy Application to EKS
+        run: |
+          sed -i "s|image: monolith:latest|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" monolith-k8s/monolith-deployment.yaml
+          kubectl apply -f monolith-k8s/monolith-deployment.yaml
+          kubectl apply -f monolith-k8s/monolith-service.yaml
+
+      - name: Verify Deployment
+        run: |
+          kubectl rollout status deployment/monolith
+          kubectl get pods
+          kubectl get services

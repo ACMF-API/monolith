@@ -1,0 +1,20 @@
+{
+  "generator-jhipster": {
+    "appsFolders": ["monolith"],
+    "dbRandomPassword": "51019d9ab4ae7829b754bfaad8eb97b43c54b0a0c78bd048373e4670139f",
+    "deploymentApplicationType": "monolith",
+    "directoryPath": "../../",
+    "dockerPushCommand": "docker push",
+    "dockerRepositoryName": "",
+    "ingressDomain": null,
+    "ingressType": null,
+    "jhipsterVersion": "8.7.1",
+    "jwtSecretKey": "ZWQ0MjFmNmQzMzQxMGMyZjBmNjllNTE1YTQ3Y2JiODA3ZDcwMTQ2MTljNmE4MjM0ZTY0NzAwZmU1ZGI4NmU2MmY5MmJkZDFkOWE1N2JmNjU1Y2RjZDJiNTEyNDZjZjY4ZGJjMw==",
+    "kubernetesNamespace": "default",
+    "kubernetesServiceType": "LoadBalancer",
+    "kubernetesStorageClassName": null,
+    "kubernetesUseDynamicStorage": false,
+    "monitoring": "no",
+    "serviceDiscoveryType": "consul"
+  }
+}

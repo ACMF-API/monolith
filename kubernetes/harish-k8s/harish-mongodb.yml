@@ -157,7 +157,7 @@ metadata:
   namespace: default
 spec:
   serviceName: harish-mongodb
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: harish-mongodb

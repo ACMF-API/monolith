@@ -56,7 +56,7 @@ spec:
                   name: jwt-secret
                   key: secret
             - name: SPRING_DATA_MONGODB_URI
-              value: 'mongodb://harish-mongodb-0.harish-mongodb.default:27017/harish'
+              value: 'mongodb://harish-mongodb-0.harish-mongodb.default:27017,harish-mongodb-1.harish-mongodb.default:27017,harish-mongodb-2.harish-mongodb.default:27017/harish'
             - name: JAVA_OPTS
               value: ' -Xmx256m -Xms256m'
             - name: SERVER_SHUTDOWN

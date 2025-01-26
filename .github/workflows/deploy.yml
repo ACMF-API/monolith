@@ -39,7 +39,7 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest .
-          docker push docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
+          docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
 
       - name: Set Up kubectl
         run: |

@@ -24,22 +24,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # - name: Make mvnw executable
-      #   run: chmod +x mvnw
+      - name: Make mvnw executable
+        run: chmod +x mvnw
 
-      # - name: Build Application (Maven)
-      #   run: ./mvnw -Pprod clean package
+      - name: Build Application (Maven)
+        run: ./mvnw -Pprod clean package
 
-      # - name: Verify Dockerfile
-      #   run: |
-      #     echo "Current directory: $(pwd)"
-      #     ls -la
-      #     if [ -f Dockerfile ]; then
-      #       echo "Dockerfile found!"
-      #     else
-      #       echo "ERROR: Dockerfile not found!"
-      #       exit 1
-      #     fi
+      - name: Verify Dockerfile
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          if [ -f Dockerfile ]; then
+            echo "Dockerfile found!"
+          else
+            echo "ERROR: Dockerfile not found!"
+            exit 1
+          fi
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -53,16 +53,16 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      # - name: Build and Push Docker Images
-      #   env:
-      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-      #     ECR_REPOSITORY: harish  # Update to match your ECR repo
-      #     IMAGE_TAG: latest
-      #   run: |
-      #     echo "Building Docker image..."
-      #     docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest .
-      #     echo "Pushing Docker image..."
-      #     docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
+      - name: Build and Push Docker Images
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: harish  # Update to match your ECR repo
+          IMAGE_TAG: latest
+        run: |
+          echo "Building Docker image..."
+          docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest .
+          echo "Pushing Docker image..."
+          docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
 
       - name: Set Up kubectl
         run: |

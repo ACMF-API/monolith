@@ -66,13 +66,13 @@ jobs:
             --name acmf-eks-NXrHnw4W
 
       - name: Deploy MySQL to EKS
-        run: kubectl apply -f monolith-k8s/monolith-mysql.yaml
+        run: kubectl apply -f monolith-k8s/monolith-mysql.yml
 
       - name: Deploy Application to EKS
         run: |
-          sed -i "s|image: monolith:latest|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" monolith-k8s/monolith-deployment.yaml
-          kubectl apply -f monolith-k8s/monolith-deployment.yaml
-          kubectl apply -f monolith-k8s/monolith-service.yaml
+          sed -i "s|image: monolith:latest|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" monolith-k8s/monolith-deployment.yml
+          kubectl apply -f monolith-k8s/monolith-deployment.yml
+          kubectl apply -f monolith-k8s/monolith-service.yml
 
       - name: Verify Deployment
         run: |

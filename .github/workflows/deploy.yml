@@ -38,7 +38,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker build -t docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest .
+          docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest .
           docker push docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
 
       - name: Set Up kubectl

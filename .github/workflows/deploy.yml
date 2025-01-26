@@ -38,12 +38,14 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest .
+          docker push docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
 
       - name: Set Up kubectl
         run: |
-          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+          # aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+          aws eks update-kubeconfig --region us-east-1 --name acmf-eks-NXrHnw4W
+
 
       - name: Deploy MySQL to EKS
         run: |

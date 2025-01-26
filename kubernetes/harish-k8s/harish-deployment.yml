@@ -46,7 +46,7 @@ spec:
               done
       containers:
         - name: harish-app
-          image: harish
+          image: 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prod

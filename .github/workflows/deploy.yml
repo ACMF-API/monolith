@@ -75,22 +75,22 @@ jobs:
           kubectl config get-contexts
           kubectl cluster-info
 
-      - name: Validate Kubernetes Manifests
-        run: |
-          kubectl apply --dry-run=client -f harish-k8s/harish-mongodb.yml
-          kubectl apply --dry-run=client -f harish-k8s/harish-deployment.yml
-          kubectl apply --dry-run=client -f harish-k8s/harish-service.yml
+      # - name: Validate Kubernetes Manifests
+      #   run: |
+      #     kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-mongodb.yml
+      #     kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-deployment.yml
+      #     kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-service.yml
 
 
       - name: Deploy MongoDB to EKS
         run: |
-         kubectl apply -f harish-k8s/harish-mongodb.yml
-         kubectl wait --for=condition=ready pod -l app=harish-mongodb --timeout=300s
+         kubectl apply -f kubernetes/harish-k8s/harish-mongodb.yml
+        #  kubectl wait --for=condition=ready pod -l app=harish-mongodb --timeout=300s
 
       - name: Deploy Application to EKS
         run: |
-          kubectl apply -f harish-k8s/harish-deployment.yml
-          kubectl apply -f harish-k8s/harish-service.yml
+          kubectl apply -f kubernetes/harish-k8s/harish-deployment.yml
+          kubectl apply -f kubernetes/harish-k8s/harish-service.yml
 
       - name: Verify Deployment
         run: |

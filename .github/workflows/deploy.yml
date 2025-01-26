@@ -68,14 +68,14 @@ jobs:
         run: |
           aws eks update-kubeconfig --region us-east-1 --name acmf-eks-NXrHnw4W
 
-      - name: Deploy MySQL to EKS
-        run: kubectl apply -f harish-k8s/harish-mongodb.yml
+      - name: Deploy MongoDB to EKS
+        run: kubectl apply -f kubernetes/harish-k8s/harish-mongodb.yml
 
       - name: Deploy Application to EKS
         run: |
-          sed -i "s|image: harish:latest|image: ${{ steps.login-ecr.outputs.registry }}/harish:latest|g" harish-k8s/harish-deployment.yml
-          kubectl apply -f harish-k8s/harish-deployment.yml
-          kubectl apply -f harish-k8s/harish-service.yml
+          sed -i "s|image: harish:latest|image: ${{ steps.login-ecr.outputs.registry }}/harish:latest|g"  kubernetes/harish-k8s/harish-deployment.yml
+          kubectl apply -f kubernetes/harish-k8s/harish-deployment.yml
+          kubectl apply -f kubernetes/harish-k8s/harish-service.yml
 
       - name: Verify Deployment
         run: |

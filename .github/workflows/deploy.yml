@@ -73,7 +73,7 @@ jobs:
 
       - name: Deploy Application to EKS
         run: |
-          sed -i "s|image: harish:latest|image: ${{ steps.login-ecr.outputs.registry }}/harish:latest|g"  kubernetes/harish-k8s/harish-deployment.yml
+          sed -i "image: 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest/harish:latest|g"  kubernetes/harish-k8s/harish-deployment.yml
           kubectl apply -f kubernetes/harish-k8s/harish-deployment.yml
           kubectl apply -f kubernetes/harish-k8s/harish-service.yml
 

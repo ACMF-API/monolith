@@ -64,16 +64,23 @@ jobs:
       #     echo "Pushing Docker image..."
       #     docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
 
+
+      - name: Set Up kubectl
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name acmf-eks-NXrHnw4W
+          kubectl config current-context
+
+      - name: Verify kubectl Context
+        run: |
+          kubectl config get-contexts
+          kubectl cluster-info
+              
       - name: Validate Kubernetes Manifests
         run: |
           kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-mongodb.yml
           kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-deployment.yml
           kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-service.yml
 
-      - name: Set Up kubectl
-        run: |
-          aws eks update-kubeconfig --region us-east-1 --name acmf-eks-NXrHnw4W
-          kubectl config current-context
 
       - name: Deploy MongoDB to EKS
         run: |

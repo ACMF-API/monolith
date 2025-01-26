@@ -10,14 +10,23 @@ jobs:
   deploy:
     name: Build and Deploy to EKS
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write  # Enable OIDC
+      contents: read
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsRole
+          aws-region: ${{ secrets.AWS_REGION }}  
+
       - name: Make mvnw executable
         run: chmod +x mvnw
-        
+
       # Add Java build step here 👇
       - name: Set Up JDK
         uses: actions/setup-java@v3
@@ -34,6 +43,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Log in to Amazon ECR

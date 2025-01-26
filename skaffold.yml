@@ -2,9 +2,6 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-    - image: monolith
-      context: ../monolith
-      jib: {}
   tagPolicy:
     envTemplate:
       template: '{{.IMAGE_NAME}}:latest'

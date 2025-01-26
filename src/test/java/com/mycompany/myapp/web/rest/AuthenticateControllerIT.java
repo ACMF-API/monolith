@@ -20,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration tests for the {@link AuthenticateController} REST controller.
@@ -42,7 +41,6 @@ class AuthenticateControllerIT {
     private MockMvc mockMvc;
 
     @Test
-    @Transactional
     void testAuthorize() throws Exception {
         User user = new User();
         user.setLogin("user-jwt-controller");
@@ -50,7 +48,7 @@ class AuthenticateControllerIT {
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
 
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
 
         LoginVM login = new LoginVM();
         login.setUsername("user-jwt-controller");
@@ -65,7 +63,6 @@ class AuthenticateControllerIT {
     }
 
     @Test
-    @Transactional
     void testAuthorizeWithRememberMe() throws Exception {
         User user = new User();
         user.setLogin("user-jwt-controller-remember-me");
@@ -73,7 +70,7 @@ class AuthenticateControllerIT {
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
 
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
 
         LoginVM login = new LoginVM();
         login.setUsername("user-jwt-controller-remember-me");

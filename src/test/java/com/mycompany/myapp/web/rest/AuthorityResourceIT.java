@@ -10,7 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Authority;
 import com.mycompany.myapp.repository.AuthorityRepository;
-import jakarta.persistence.EntityManager;
 import java.util.UUID;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +19,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Integration tests for the {@link AuthorityResource} REST controller.
@@ -38,9 +36,6 @@ class AuthorityResourceIT {
 
     @Autowired
     private AuthorityRepository authorityRepository;
-
-    @Autowired
-    private EntityManager em;
 
     @Autowired
     private MockMvc restAuthorityMockMvc;
@@ -83,7 +78,6 @@ class AuthorityResourceIT {
     }
 
     @Test
-    @Transactional
     void createAuthority() throws Exception {
         long databaseSizeBeforeCreate = getRepositoryCount();
         // Create the Authority
@@ -105,10 +99,9 @@ class AuthorityResourceIT {
     }
 
     @Test
-    @Transactional
     void createAuthorityWithExistingId() throws Exception {
         // Create the Authority with an existing ID
-        insertedAuthority = authorityRepository.saveAndFlush(authority);
+        insertedAuthority = authorityRepository.save(authority);
 
         long databaseSizeBeforeCreate = getRepositoryCount();
 
@@ -122,11 +115,10 @@ class AuthorityResourceIT {
     }
 
     @Test
-    @Transactional
     void getAllAuthorities() throws Exception {
         // Initialize the database
         authority.setName(UUID.randomUUID().toString());
-        insertedAuthority = authorityRepository.saveAndFlush(authority);
+        insertedAuthority = authorityRepository.save(authority);
 
         // Get all the authorityList
         restAuthorityMockMvc
@@ -137,11 +129,10 @@ class AuthorityResourceIT {
     }
 
     @Test
-    @Transactional
     void getAuthority() throws Exception {
         // Initialize the database
         authority.setName(UUID.randomUUID().toString());
-        insertedAuthority = authorityRepository.saveAndFlush(authority);
+        insertedAuthority = authorityRepository.save(authority);
 
         // Get the authority
         restAuthorityMockMvc
@@ -152,18 +143,16 @@ class AuthorityResourceIT {
     }
 
     @Test
-    @Transactional
     void getNonExistingAuthority() throws Exception {
         // Get the authority
         restAuthorityMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
     }
 
     @Test
-    @Transactional
     void deleteAuthority() throws Exception {
         // Initialize the database
         authority.setName(UUID.randomUUID().toString());
-        insertedAuthority = authorityRepository.saveAndFlush(authority);
+        insertedAuthority = authorityRepository.save(authority);
 
         long databaseSizeBeforeDelete = getRepositoryCount();
 

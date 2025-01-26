@@ -40,8 +40,6 @@ management:
           - loggers
           - prometheus
           - threaddump
-          - caches
-          - liquibase
   endpoint:
     health:
       show-details: when_authorized
@@ -52,7 +50,7 @@ management:
         liveness:
           include: livenessState
         readiness:
-          include: readinessState,db
+          include: readinessState
     jhimetrics:
       enabled: true
   info:
@@ -90,18 +88,13 @@ management:
     tags:
       application: ${spring.application.name}
 
+mongock:
+  migration-scan-package:
+    - com.mycompany.myapp.config.dbmigrations
+
 spring:
   application:
-    name: monolith
-  cloud:
-    consul:
-      discovery:
-        healthCheckPath: /management/health
-        instanceId: monolith:${spring.application.instance-id:${random.value}}
-        service-name: monolith
-      config:
-        watch:
-          enabled: false
+    name: harish
   docker:
     compose:
       enabled: true
@@ -120,36 +113,6 @@ spring:
         #- tls
   jmx:
     enabled: false
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: deferred
-  jpa:
-    open-in-view: false
-    properties:
-      hibernate.jdbc.time_zone: UTC
-      hibernate.timezone.default_storage: NORMALIZE
-      hibernate.type.preferred_instant_jdbc_type: TIMESTAMP
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: false
-      # modify batch size as necessary
-      hibernate.jdbc.batch_size: 25
-      hibernate.order_inserts: true
-      hibernate.order_updates: true
-      hibernate.query.fail_on_pagination_over_collection_fetch: true
-      hibernate.query.in_clause_parameter_padding: true
-      hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-      hibernate.cache.use_minimal_puts: true
-      hibernate.cache.hazelcast.instance_name: monolith
-      hibernate.cache.hazelcast.use_lite_member: true
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
   messages:
     basename: i18n/messages
   main:
@@ -165,13 +128,13 @@ spring:
           authorities-claim-name: auth
   task:
     execution:
-      thread-name-prefix: monolith-task-
+      thread-name-prefix: harish-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: monolith-scheduling-
+      thread-name-prefix: harish-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -202,7 +165,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'monolithApp'
+    name: 'harishApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
@@ -212,12 +175,12 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: monolith@localhost
+    from: harish@localhost
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
-    title: Monolith API
-    description: Monolith API documentation
+    title: Harish API
+    description: Harish API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

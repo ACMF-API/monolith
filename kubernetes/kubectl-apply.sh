@@ -24,8 +24,7 @@ logSummary() {
 
 default() {
     suffix=k8s
-    kubectl apply -f registry-${suffix}/
-    kubectl apply -f monolith-${suffix}/
+    kubectl apply -f harish-${suffix}/
 
 }
 

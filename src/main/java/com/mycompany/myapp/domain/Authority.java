@@ -1,35 +1,24 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.domain.Persistable;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * A Authority.
  */
-@Entity
-@Table(name = "jhi_authority")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-@JsonIgnoreProperties(value = { "new", "id" })
+@Document(collection = "jhi_authority")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Authority implements Serializable, Persistable<String> {
+public class Authority implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @NotNull
     @Size(max = 50)
     @Id
-    @Column(name = "name", length = 50, nullable = false)
     private String name;
-
-    @org.springframework.data.annotation.Transient
-    @Transient
-    private boolean isPersisted;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -44,29 +33,6 @@ public class Authority implements Serializable, Persistable<String> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @PostLoad
-    @PostPersist
-    public void updateEntityState() {
-        this.setIsPersisted();
-    }
-
-    @Override
-    public String getId() {
-        return this.name;
-    }
-
-    @org.springframework.data.annotation.Transient
-    @Transient
-    @Override
-    public boolean isNew() {
-        return !this.isPersisted;
-    }
-
-    public Authority setIsPersisted() {
-        this.isPersisted = true;
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

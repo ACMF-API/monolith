@@ -3,12 +3,10 @@ commonLabels:
 
 resources:
   # Individual apps
-  - monolith-k8s/monolith-deployment.yml
-  - monolith-k8s/monolith-service.yml
-  - monolith-k8s/monolith-mysql.yml
-  # service discovery eureka/consul
-  - registry-k8s/consul.yml
-  - registry-k8s/consul-config-loader.yml
-  - registry-k8s/application-configmap.yml
+  - harish-k8s/harish-deployment.yml
+  - harish-k8s/harish-service.yml
+  - harish-k8s/harish-mongodb.yml
+  - harish-k8s/jwt-secret.yml
+# service discovery eureka/consul
 
 patchesJson6902:

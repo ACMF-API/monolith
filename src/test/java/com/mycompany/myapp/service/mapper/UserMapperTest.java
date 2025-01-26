@@ -22,7 +22,7 @@ import org.junit.jupiter.api.Test;
 class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";
-    private static final Long DEFAULT_ID = 1L;
+    private static final String DEFAULT_ID = "id1";
 
     private UserMapper userMapper;
     private User user;

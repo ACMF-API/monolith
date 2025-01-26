@@ -5,7 +5,7 @@
 You will need to push your image to a registry. If you have not done so, use the following commands to tag and push the images:
 
 ```
-$ docker push monolith
+$ docker push harish
 ```
 
 ## Deployment
@@ -33,7 +33,7 @@ skaffold run [or] skaffold deploy
 Use these commands to find your application's IP addresses:
 
 ```
-$ kubectl get svc monolith
+$ kubectl get svc harish
 ```
 
 ## Scaling your deployments

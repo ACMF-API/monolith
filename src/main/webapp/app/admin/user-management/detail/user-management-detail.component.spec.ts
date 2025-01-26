@@ -20,7 +20,7 @@ describe('User Management Detail Component', () => {
               resolve: {
                 user: () =>
                   of({
-                    id: 123,
+                    id: 'ABC',
                     login: 'user',
                     firstName: 'first',
                     lastName: 'last',
@@ -50,7 +50,7 @@ describe('User Management Detail Component', () => {
       // THEN
       expect(instance.user()).toEqual(
         expect.objectContaining({
-          id: 123,
+          id: 'ABC',
           login: 'user',
           firstName: 'first',
           lastName: 'last',

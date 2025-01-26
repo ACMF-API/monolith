@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: harish
+  namespace: default
+  labels:
+    app: harish
+spec:
+  selector:
+    app: harish
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080

@@ -11,7 +11,7 @@ public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private String id;
 
     private String login;
 
@@ -25,11 +25,11 @@ public class UserDTO implements Serializable {
         this.login = user.getLogin();
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

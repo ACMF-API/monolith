@@ -17,7 +17,7 @@ export class UserService {
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/users');
 
-  find(id: number): Observable<EntityResponseType> {
+  find(id: string): Observable<EntityResponseType> {
     return this.http.get<IUser>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
@@ -26,7 +26,7 @@ export class UserService {
     return this.http.get<IUser[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
-  getUserIdentifier(user: Pick<IUser, 'id'>): number {
+  getUserIdentifier(user: Pick<IUser, 'id'>): string {
     return user.id;
   }
 

@@ -23,18 +23,12 @@
               <td [jhiTranslate]="'health.indicator.' + componentHealth.key">
                 {{
                   {
-                    discoveryComposite: 'Discovery Composite',
-                    refreshScope: 'Microservice Refresh Scope',
-                    clientConfigServer: 'Microservice Config Server',
-                    hystrix: 'Hystrix',
-                    consul: 'Consul',
-                    hazelcast: 'Hazelcast',
                     diskSpace: 'Disk space',
                     mail: 'Email',
                     livenessState: 'Liveness state',
                     readinessState: 'Readiness state',
                     ping: 'Application',
-                    db: 'Database',
+                    mongo: 'MongoDB',
                   }[componentHealth.key] || componentHealth.key
                 }}
               </td>

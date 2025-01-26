@@ -1,8 +1,6 @@
-# monolith
+# harish
 
 This application was generated using JHipster 8.8.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.8.0](https://www.jhipster.tech/documentation-archive/v8.8.0).
-
-This application is configured for Service Discovery and Configuration with Consul. On launch, it will refuse to start if it is not able to connect to Consul at [http://localhost:8500](http://localhost:8500). For more information, read our documentation on [Service Discovery and Configuration with Consul][].
 
 ## Project Structure
 
@@ -34,13 +32,6 @@ You will only need to run this command when dependencies change in [package.json
 ```
 
 We use npm scripts and [Angular CLI][] with [Webpack][] as our build system.
-
-If you are using hazelcast as a cache, you will have to launch a cache server.
-To start your cache server, run:
-
-```
-docker compose -f src/main/docker/hazelcast-management-center.yml up -d
-```
 
 Run the following commands in two separate terminals to create a blissful development experience where your browser
 auto-refreshes when files change on your hard drive.
@@ -119,7 +110,7 @@ update src/main/webapp/app/app.config.ts
 
 ### Packaging as jar
 
-To build the final jar and optimize the monolith application for production, run:
+To build the final jar and optimize the harish application for production, run:
 
 ```
 ./mvnw -Pprod clean verify
@@ -259,7 +250,6 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [JHipster Homepage and latest documentation]: https://www.jhipster.tech
 [JHipster 8.8.0 archive]: https://www.jhipster.tech/documentation-archive/v8.8.0
 [Using JHipster in development]: https://www.jhipster.tech/documentation-archive/v8.8.0/development/
-[Service Discovery and Configuration with Consul]: https://www.jhipster.tech/documentation-archive/v8.8.0/microservices-architecture/#consul
 [Using Docker and Docker-Compose]: https://www.jhipster.tech/documentation-archive/v8.8.0/docker-compose
 [Using JHipster in production]: https://www.jhipster.tech/documentation-archive/v8.8.0/production/
 [Running tests page]: https://www.jhipster.tech/documentation-archive/v8.8.0/running-tests/

@@ -1,17 +1,6 @@
 export type HealthStatus = 'UP' | 'DOWN' | 'UNKNOWN' | 'OUT_OF_SERVICE';
 
-export type HealthKey =
-  | 'discoveryComposite'
-  | 'refreshScope'
-  | 'clientConfigServer'
-  | 'hystrix'
-  | 'consul'
-  | 'diskSpace'
-  | 'mail'
-  | 'ping'
-  | 'livenessState'
-  | 'readinessState'
-  | 'db';
+export type HealthKey = 'diskSpace' | 'mail' | 'ping' | 'livenessState' | 'readinessState' | 'mongo';
 
 export interface Health {
   status: HealthStatus;

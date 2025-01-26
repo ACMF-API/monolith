@@ -24,12 +24,6 @@ management:
     metrics:
       export:
         enabled: false
-  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
-    tracing:
-      endpoint: http://localhost:9411/api/v2/spans
-  tracing:
-    sampling:
-      probability: 1.0 # report 100% of traces
 
 spring:
   devtools:
@@ -37,28 +31,9 @@ spring:
       enabled: false
     livereload:
       enabled: false
-  cloud:
-    consul:
-      discovery:
-        prefer-ip-address: true
-      host: localhost
-      port: 8500
-  datasource:
-    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/monolith?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
-    username: root
-    password:
-    hikari:
-      poolName: Hikari
-      auto-commit: false
-      data-source-properties:
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
-  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
-  liquibase:
-    contexts: prod
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/harish
   mail:
     host: localhost
     port: 25
@@ -69,7 +44,7 @@ spring:
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
-# keytool -genkey -alias monolith -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
+# keytool -genkey -alias harish -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
 #
 # You can also use Let's Encrypt:
 # See details in topic "Create a Java Keystore (.JKS) from Let's Encrypt Certificates" on https://maximilian-boehm.com/en-gb/blog
@@ -104,10 +79,6 @@ jhipster:
   http:
     cache: # Used by the CachingHttpHeadersFilter
       timeToLiveInDays: 1461
-  cache: # Cache configuration
-    hazelcast: # Hazelcast distributed cache
-      time-to-live-seconds: 3600
-      backup-count: 1
   security:
     authentication:
       jwt:
@@ -116,7 +87,7 @@ jhipster:
         # - In the Consul configserver
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: ZWNkM2YyN2E4NzZhN2M3NDg1NGJiODAwMjYxY2Q3ZmNmNTk1MTdmOTUzOGM1OWQ4N2QyNjdjNzUyOGViZWZkZTZhZjZkYTRmYTc3YzFiZmMxN2MxNzI1MzZkM2U2MjY5MDdmZDQ1MDVjMmFhYzgxNjkyZmJjOTEwYTUwYmRkNWM=
+        base64-secret: YjU1ZWI3NDgwNDFmZWY4ODFjOGFjMmEyMWE5OTI1NTAyZWRlNjEzNjk2OTVkZGYwYjA5YzI2YWYxZWQxNGUzZGEzOWIxNjQzYjUzYTg3NzE4YjI5NjhhZDc3MDE4MmVlMzBjMzhhMWU4MzYwOGViNGM0ODQyZTRiMzdhOGVkMzE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

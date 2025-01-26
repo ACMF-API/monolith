@@ -42,7 +42,7 @@ export default class UserManagementComponent implements OnInit {
     this.userService.update({ ...user, activated: isActivated }).subscribe(() => this.loadAll());
   }
 
-  trackIdentity(item: User): number {
+  trackIdentity(item: User): string {
     return item.id!;
   }
 

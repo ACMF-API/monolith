@@ -1,15 +1,7 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
-name: monolith
+name: harish
 services:
-  mysql:
+  mongodb:
     extends:
-      file: ./mysql.yml
-      service: mysql
-  consul:
-    extends:
-      file: ./consul.yml
-      service: consul
-  consul-config-loader:
-    extends:
-      file: ./consul.yml
-      service: consul-config-loader
+      file: ./mongodb.yml
+      service: mongodb

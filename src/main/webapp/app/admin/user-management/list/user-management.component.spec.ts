@@ -53,7 +53,7 @@ describe('User Management Component', () => {
         jest.spyOn(service, 'query').mockReturnValue(
           of(
             new HttpResponse({
-              body: [new User(123)],
+              body: [new User('ABC')],
               headers,
             }),
           ),
@@ -65,7 +65,7 @@ describe('User Management Component', () => {
 
         // THEN
         expect(service.query).toHaveBeenCalled();
-        expect(comp.users()?.[0]).toEqual(expect.objectContaining({ id: 123 }));
+        expect(comp.users()?.[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
       }),
     ));
   });
@@ -76,7 +76,7 @@ describe('User Management Component', () => {
       fakeAsync(() => {
         // GIVEN
         const headers = new HttpHeaders().append('link', 'link;link');
-        const user = new User(123);
+        const user = new User('ABC');
         jest.spyOn(service, 'query').mockReturnValue(
           of(
             new HttpResponse({
@@ -94,7 +94,7 @@ describe('User Management Component', () => {
         // THEN
         expect(service.update).toHaveBeenCalledWith({ ...user, activated: true });
         expect(service.query).toHaveBeenCalled();
-        expect(comp.users()?.[0]).toEqual(expect.objectContaining({ id: 123 }));
+        expect(comp.users()?.[0]).toEqual(expect.objectContaining({ id: 'ABC' }));
       }),
     ));
   });

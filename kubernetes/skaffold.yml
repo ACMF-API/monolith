@@ -2,8 +2,8 @@ apiVersion: skaffold/v1
 kind: Config
 build:
   artifacts:
-    - image: monolith
-      context: ../../monolith
+    - image: harish
+      context: ../../harish
       jib: {}
   tagPolicy:
     envTemplate:

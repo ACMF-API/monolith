@@ -13,20 +13,18 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+mongock:
+  migration-scan-package:
+    - com.mycompany.myapp.config.dbmigrations
+  mongo-db:
+    read-concern: local
+    write-concern:
+      journal: false
+      w: 'majority'
+
 spring:
   application:
-    name: monolith
-  cloud:
-    consul:
-      discovery:
-        enabled: false
-        instanceId: ${spring.application.name}:${spring.application.instance-id:${random.value}}
-      config:
-        enabled: false
-      enabled: false
-  # Replace by 'prod, faker' to add the faker context and have sample data loaded in production
-  liquibase:
-    contexts: test
+    name: harish
   jackson:
     serialization:
       write-durations-as-timestamps: false
@@ -44,13 +42,13 @@ spring:
           authorities-claim-name: auth
   task:
     execution:
-      thread-name-prefix: monolith-task-
+      thread-name-prefix: harish-task-
       pool:
         core-size: 1
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: monolith-scheduling-
+      thread-name-prefix: harish-scheduling-
       pool:
         size: 20
   thymeleaf:
@@ -67,9 +65,9 @@ server:
 # ===================================================================
 jhipster:
   clientApp:
-    name: 'monolithApp'
+    name: 'harishApp'
   mail:
-    from: monolith@localhost.com
+    from: harish@localhost.com
     base-url: http://127.0.0.1:8080
   logging:
     # To test json console appender
@@ -83,7 +81,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-        base64-secret: ZWNkM2YyN2E4NzZhN2M3NDg1NGJiODAwMjYxY2Q3ZmNmNTk1MTdmOTUzOGM1OWQ4N2QyNjdjNzUyOGViZWZkZTZhZjZkYTRmYTc3YzFiZmMxN2MxNzI1MzZkM2U2MjY5MDdmZDQ1MDVjMmFhYzgxNjkyZmJjOTEwYTUwYmRkNWM=
+        base64-secret: YjU1ZWI3NDgwNDFmZWY4ODFjOGFjMmEyMWE5OTI1NTAyZWRlNjEzNjk2OTVkZGYwYjA5YzI2YWYxZWQxNGUzZGEzOWIxNjQzYjUzYTg3NzE4YjI5NjhhZDc3MDE4MmVlMzBjMzhhMWU4MzYwOGViNGM0ODQyZTRiMzdhOGVkMzE=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 86400

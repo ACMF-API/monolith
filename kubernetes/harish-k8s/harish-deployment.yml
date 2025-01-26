@@ -47,6 +47,7 @@ spec:
       containers:
         - name: harish-app
           image: 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
+          imagePullPolicy: Always
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: prod

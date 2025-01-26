@@ -24,11 +24,11 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Make mvnw executable
-        run: chmod +x mvnw
+      # - name: Make mvnw executable
+      #   run: chmod +x mvnw
 
-      - name: Build Application (Maven)
-        run: ./mvnw -Pprod clean package
+      # - name: Build Application (Maven)
+      #   run: ./mvnw -Pprod clean package
 
       - name: Verify Dockerfile
         run: |
@@ -53,23 +53,32 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Push Docker Images
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: harish  # Update to match your ECR repo
-          IMAGE_TAG: latest
+      # - name: Build and Push Docker Images
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: harish  # Update to match your ECR repo
+      #     IMAGE_TAG: latest
+      #   run: |
+      #     echo "Building Docker image..."
+      #     docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest .
+      #     echo "Pushing Docker image..."
+      #     docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
+
+      - name: Validate Kubernetes Manifests
         run: |
-          echo "Building Docker image..."
-          docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest .
-          echo "Pushing Docker image..."
-          docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/harish:latest
+          kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-mongodb.yml
+          kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-deployment.yml
+          kubectl apply --dry-run=client -f kubernetes/harish-k8s/harish-service.yml
 
       - name: Set Up kubectl
         run: |
           aws eks update-kubeconfig --region us-east-1 --name acmf-eks-NXrHnw4W
+          kubectl config current-context
 
       - name: Deploy MongoDB to EKS
-        run: kubectl apply -f kubernetes/harish-k8s/harish-mongodb.yml
+        run: |
+         kubectl apply -f kubernetes/harish-k8s/harish-mongodb.yml
+         kubectl wait --for=condition=ready pod -l app=harish-mongodb --timeout=300s
 
       - name: Deploy Application to EKS
         run: |

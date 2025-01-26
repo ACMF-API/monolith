@@ -15,6 +15,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Make mvnw executable
+        run: chmod +x mvnw
+        
       # Add Java build step here 👇
       - name: Set Up JDK
         uses: actions/setup-java@v3

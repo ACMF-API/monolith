@@ -56,8 +56,8 @@ jobs:
           ECR_REPOSITORY: monolith  # Update to match your ECR repo
           IMAGE_TAG: latest
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest .
+          docker push 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest
 
       - name: Set Up kubectl
         run: |
@@ -70,7 +70,7 @@ jobs:
 
       - name: Deploy Application to EKS
         run: |
-          sed -i "s|image: monolith:latest|image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" monolith-k8s/monolith-deployment.yml
+          sed -i "s|image: monolith:latest|image: 637423430820.dkr.ecr.us-east-1.amazonaws.com/monolith:latest|g" monolith-k8s/monolith-deployment.yml
           kubectl apply -f monolith-k8s/monolith-deployment.yml
           kubectl apply -f monolith-k8s/monolith-service.yml
 

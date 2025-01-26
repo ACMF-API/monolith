@@ -163,6 +163,8 @@ spec:
       app: harish-mongodb
   template:
     metadata:
+      annotations:
+      consul.hashicorp.com/connect-inject: "false"
       labels:
         app: harish-mongodb
     spec:
